@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mdscript name="Discovery_Scan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:\x4_extract_3.0b1/libraries/md.xsd">
+    <cues>
+        <cue name="Init">
+            <actions>
+            </actions>
+            <cues>
+                <cue name="Scan" instantiate="true">
+                    <conditions>
+                        <event_long_range_scan_sent object="player.entity" />
+                    </conditions>
+                    <actions>
+                <set_value name="$Distance" exact="1000km" />
+
+                        <!-- <create_group groupname="$ScanResults" /> -->
+                        <find_object groupname="$ScanResults" space="player.sector" multiple="true" sortbydistanceto="player.ship">
+                            <!-- <match_distance object="player.ship" max="$Distance" /> -->
+                        </find_object>
+                        <do_for_each in="$ScanResults" reverse="true">
+                            <do_if value="not loop.element.knownname?">
+                                <remove_from_group group="$ScanResults" object="loop.element" />
+                            </do_if>
+                        </do_for_each>
+                        <set_value name="$DisplayTable" exact="table[]" />
+                        <do_for_each in="$ScanResults" name="$Object">
+                            <do_if value="$Object.owner != null and $Object.owner != faction.player">
+                                <do_if value="not $DisplayTable.{$Object.owner}?">
+                                    <set_value name="$DisplayTable.{$Object.owner}" exact="table[]" />
+                                </do_if>
+                                <do_if value="not $DisplayTable.{$Object.owner}.$Objects?">
+                                    <set_value name="$DisplayTable.{$Object.owner}.$Objects" exact="[]" />
+                                </do_if>
+                                <append_to_list name="$DisplayTable.{$Object.owner}.$Objects" exact="$Object" />
+                            </do_if>
+                        </do_for_each>
+                        <clear_group group="$ScanResults" />
+                    </actions>
+                    <cues>
+                        <cue name="Scan_Menu_Call_Menu_LIB" ref="md.Discovery_Menu_LIB.Menu_LIB">
+                            <param name="Title" value="'Scan Results'" />
+                            <param name="ObjectTable" value="$DisplayTable" />
+                            <param name="MenuType" value="'display scan'" />
+                            <param name="ButtonText" value="'Set Guidance'" />
+                            <param name="ReturnCue" value="Set_Guidance" />
+                        </cue>
+                    </cues>
+                </cue>
+                <cue name="Set_Guidance" instantiate="true">
+                    <conditions>
+                        <event_cue_signalled />
+                    </conditions>
+                    <actions>
+                        <signal_cue_instantly cue="md.Guidance.NewTarget" param="[event.param.$echo, null]" />
+                    </actions>
+                </cue>
+            </cues>
+        </cue>
+    </cues>
+</mdscript>

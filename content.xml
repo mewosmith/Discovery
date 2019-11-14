@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content id="Discovery" name="Discovery"  description="Discovery" author="albysmith" version="2" date="2018-01-09" save="0" >
+ <text language="7" name="Discovery" description="Discovery" author="albysmith" />
+ <text language="33" name="Discovery" description="Discovery" author="albysmith" />
+ <text language="34" name="Discovery" description="Discovery" author="albysmith" />
+ <text language="39" name="Discovery" description="Discovery" author="albysmith" />
+ <text language="44" name="Discovery" description="Discovery" author="albysmith" />
+ <text language="49" name="Discovery" description="Discovery" author="albysmith" />
+ <text language="55" name="Discovery" description="Discovery" author="albysmith" />
+ <text language="81" name="Discovery" description="Discovery" author="albysmith" />
+ <text language="82" name="Discovery" description="Discovery" author="albysmith" />
+ <text language="86" name="Discovery" description="Discovery" author="albysmith" />
+ <text language="88" name="Discovery" description="Discovery" author="albysmith" />
+</content>
